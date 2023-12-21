@@ -36,6 +36,15 @@ app.post('/recipes',(req,res) => {
     })
 })
 
+// Read method
+app.get('/recipes',(req,res) => {
+    Recipe.find().then((recipe) => {
+        res.json(recipe)
+    }).catch((err) => {
+        res.json({err:"An error occured"})
+    })
+})
+
 app.listen(process.env.SERVER_PORT,(req,res) => {
     mongoose.connect(process.env.MONGODB_URL,{})
     .then(() => console.log(`Server running on port ${process.env.SERVER_PORT}`))
