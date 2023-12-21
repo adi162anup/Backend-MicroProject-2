@@ -20,6 +20,22 @@ app.get('/',(req,res) => {
     res.json({message: 'All good'})
 })
 
+// Create method
+app.post('/recipes',(req,res) => {
+    const {recipeName, recipeTime, ingredients, serves} = req.body
+    const recipe = new Recipe({
+        recipeName: recipeName,
+        recipeTime: recipeTime,
+        ingredients: ingredients,
+        serves: serves
+    })
+    recipe.save().then((recipe) => {
+        res.json({message: 'Recipe added successfully'})
+    }).catch((err) => {
+        res.json({err: 'An error occured'})
+    })
+})
+
 app.listen(process.env.SERVER_PORT,(req,res) => {
     mongoose.connect(process.env.MONGODB_URL,{})
     .then(() => console.log(`Server running on port ${process.env.SERVER_PORT}`))
