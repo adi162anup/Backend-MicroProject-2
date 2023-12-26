@@ -45,6 +45,16 @@ app.get('/recipes',(req,res) => {
     })
 })
 
+// Delete method
+app.get('/recipes/:id',(req,res) => {
+    let { id } = req.params;
+    Recipe.findByIdAndDelete(id).then((recipe) => {
+        res.json({message: 'Recipe deleted successfully'})
+    }).catch((err) => {
+        res.json({err: 'An error occured'})
+    })
+})
+
 app.listen(process.env.SERVER_PORT,(req,res) => {
     mongoose.connect(process.env.MONGODB_URL,{})
     .then(() => console.log(`Server running on port ${process.env.SERVER_PORT}`))
